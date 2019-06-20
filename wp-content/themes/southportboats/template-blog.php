@@ -19,14 +19,22 @@
                  <?php while ( have_posts() ) : the_post(); ?>
 
                  <li class="post-content">
+                    <?php if($blogImage = get_field('blog_teaser_image')) { ?> 
+                        <a href="<?php the_permalink(); ?>">
+                            <img src="<?php echo $blogImage['sizes']['featured-image']; ?>" alt="<?php echo $blogImage['alt']; ?>" />
+                        </a>
+                    <?php } ?>
+
                      <div class="text-wrap clearfix">
+                        <?php /* ?>
                          <div class="date-wrap pull-left">
                              <span><?php the_time('M'); ?></span>
                              <h6><?php the_time('j'); ?></h6>
                              <span><?php the_time('Y'); ?></span>
-                         </div><!--date-wrap-->
+                         </div>
+                         */ ?>
 
-                         <div class="text pull-right">
+                         <div class="text"> <!--  class="pull-right" -->
                              <h5><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
                              <p><?php the_excerpt(); ?></p>
                              <a href="<?php the_permalink(); ?>" class="link more">read more</a>

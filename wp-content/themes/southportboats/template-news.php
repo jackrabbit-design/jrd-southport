@@ -19,14 +19,21 @@
                  <?php while ( have_posts() ) : the_post(); ?>
 
                  <li class="post-content">
+                    <?php if($newsImage = get_field('news_teaser_image')) { ?> 
+                        <a href="<?php the_permalink(); ?>">
+                            <img src="<?php echo $newsImage['sizes']['featured-image']; ?>" alt="<?php echo $newsImage['alt']; ?>" />
+                        </a>
+                    <?php } ?>
                      <div class="text-wrap clearfix">
+                        <?php /*
                          <div class="date-wrap pull-left">
                              <span><?php the_time('M'); ?></span>
                              <h6><?php the_time('j'); ?></h6>
                              <span><?php the_time('Y'); ?></span>
-                         </div><!--date-wrap-->
+                         </div>
+                         */ ?>
 
-                         <div class="text pull-right">
+                         <div class="text"> <!--  class="pull-right" -->
                              <h5><?php echo (get_field('news_external_link') ? '<a href="' . get_field('news_external_link') . '" target="_blank">' . get_the_title() . '</a>' : '<a href="' . get_permalink() . '">' . get_the_title() . '</a>'); ?></h5>
                              <p><?php the_excerpt(); ?></p>
                              <?php echo (get_field('news_external_link') ? '<a href="' . get_field('news_external_link') . '" class="link more" target="_blank">read more</a>' : '<a href="' . get_permalink() . '" class="link more">read more</a>'); ?>
