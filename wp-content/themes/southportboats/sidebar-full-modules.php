@@ -30,7 +30,10 @@
                             <?php } ?>
 
                             <?php $post_object = get_sub_field('event_to_display');    
-                                if( $post_object ): $post = $post_object; setup_postdata( $post ); ?>
+                                if( $post_object ): $post = $post_object; setup_postdata( $post ); 
+
+                                    $date = DateTime::createFromFormat('Ymd', get_field('event_date'));
+                                    $dateEnd = DateTime::createFromFormat('Ymd', get_field('event_date_end')); ?>
                         
                                 <div class="clearfix inner-wrap">
                                 <div class="col-one pull-left" style="background-image:url(<?php if($eventImage = get_field('event_image')) { echo $eventImage['sizes']['featured-image']; } ?>);"></div>
@@ -38,7 +41,11 @@
                                         <h4>
                                             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                         </h4>
-                                        <h6><?php $date = DateTime::createFromFormat('Ymd', get_field('event_date')); echo $date->format('F j, Y'); ?> <span>|</span>  <?php the_field('event_location'); ?></h6>
+                                        <h6><?php if(get_field('event_date_end')) {
+                                                echo $date->format('F j, Y') . ' - ' . $dateEnd->format('F j, Y');
+                                            } else { 
+                                                echo $date->format('F j, Y'); 
+                                            };?>  <span>|</span>  <?php the_field('event_location'); ?></h6>
                                         <p><?php the_field('event_teaser'); ?></p>
                                         <a href="<?php the_permalink(); ?>" class="btn white-outline">LEARN MORE</a>
                                     </div>
@@ -83,15 +90,22 @@
                             $date = strtotime($date);
                             $today = strtotime(date('Y-m-d'));
 
-                            if($date <= $today) continue;  ?>
-                        
+                            if($date <= $today) continue;
+                    
+                            $date = DateTime::createFromFormat('Ymd', get_field('event_date'));
+                            $dateEnd = DateTime::createFromFormat('Ymd', get_field('event_date_end'));  ?>
+                
                                 <div class="clearfix inner-wrap">
                                 <div class="col-one pull-left" style="background-image:url(<?php if($eventImage = get_field('event_image')) { echo $eventImage['sizes']['featured-image']; } ?>);"></div>
                                     <div class="col-two pull-right">
                                         <h4>
                                             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                         </h4>
-                                        <h6><?php $date = DateTime::createFromFormat('Ymd', get_field('event_date')); echo $date->format('F j, Y'); ?> <span>|</span>  <?php the_field('event_location'); ?></h6>
+                                        <h6><?php if(get_field('event_date_end')) {
+                                                echo $date->format('F j, Y') . ' - ' . $dateEnd->format('F j, Y');
+                                            } else { 
+                                                echo $date->format('F j, Y'); 
+                                            };?>  <span>|</span>  <?php the_field('event_location'); ?></h6>
                                         <p><?php the_field('event_teaser'); ?></p>
                                         <a href="<?php the_permalink(); ?>" class="btn white-outline">LEARN MORE</a>
                                     </div>
@@ -152,7 +166,7 @@
                     <img src="<?php echo $firstImage['sizes']['image-row-image']; ?>" />
                 </div>
                 <div class="col-three box">
-                    <img src="<?php echo $firstImage['sizes']['image-row-image']; ?>" />
+                    <img src="<?php echo $secondImage['sizes']['image-row-image']; ?>" />
                 </div>
                 <div class="col-two box">
                     <img src="<?php bloginfo('url'); ?>/ui/images/dark-photo.png" width="478" height="474" alt="" />
@@ -192,14 +206,20 @@
                             <?php query_posts('post_type=news-article&posts_per_page=1&orderby=date&order=DESC'); 
                                 while ( have_posts() ) : the_post(); ?>
 
+                                <?php if($newsImage = get_field('news_teaser_image')) { ?> 
+                                    <a href="<?php the_permalink(); ?>">
+                                        <img src="<?php echo $newsImage['sizes']['featured-image']; ?>" alt="<?php echo $newsImage['alt']; ?>" />
+                                    </a>
+                                <?php } ?>
                                 <div class="text-wrap clearfix">
+                                    <?php /*
                                     <div class="date-wrap pull-left">
                                          <span><?php the_time('M'); ?></span>
                                          <h6><?php the_time('j'); ?></h6>
                                          <span><?php the_time('Y'); ?></span>
-                                    </div><!--date-wrap-->
-                                    
-                                    <div class="text pull-right">
+                                    </div>
+                                     */ ?>
+                                    <div class="text"> <!--  class="pull-right" -->
                                         <h5><?php echo (get_field('news_external_link') ? '<a href="' . get_field('news_external_link') . '" target="_blank">' . get_the_title() . '</a>' : '<a href="' . get_permalink() . '">' . get_the_title() . '</a>'); ?></h5>
                                         <?php the_excerpt(); ?>
                                         
@@ -226,19 +246,25 @@
                             <?php query_posts('post_type=blog-post&posts_per_page=1&orderby=date&order=DESC'); 
                                 while ( have_posts() ) : the_post(); ?>
 
+                                        <?php if($blogImage = get_field('blog_teaser_image')) { ?> 
+                                            <a href="<?php the_permalink(); ?>">
+                                                <img src="<?php echo $blogImage['sizes']['featured-image']; ?>" alt="<?php echo $blogImage['alt']; ?>" />
+                                            </a>
+                                        <?php } ?>
+
                                         <div class="text-wrap clearfix">
+                                            <?php /*
                                             <div class="date-wrap pull-left">
                                                  <span><?php the_time('M'); ?></span>
                                                  <h6><?php the_time('j'); ?></h6>
                                                  <span><?php the_time('Y'); ?></span>
-                                            </div><!--date-wrap-->
-                                            
-                                            <div class="text pull-right">
+                                            </div>
+                                            */ ?>
+                                            <div class="text"> <!--  class="pull-right" -->
                                                 <h5>
                                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                                 </h5>
                                                 <?php the_excerpt(); ?>
-                                                
                                                 <a href="<?php the_permalink(); ?>" class="link more">read more</a>
                                             </div>
                                         </div>
@@ -266,6 +292,34 @@
                 </div>
             </div>
         </section><!--testimonials/-->
+
+
+    <?php elseif(get_row_layout() == "content_and_image"): ?>
+    
+        <div class="content-image">
+
+            <div class="container">
+                <div class="container-inner clearfix">
+
+                    <aside class="main-right pull-right">
+
+                        <div class="side-bar-box">
+                            <?php $sidebarImage = get_sub_field('full_module_image'); ?>
+                            <img src="<?php echo $sidebarImage['sizes']['sidebar-image']; ?>" alt="<?php echo $sidebarImage['alt']; ?>" />
+                        </div>
+
+                    </aside>
+
+
+                    <article class="pg-content main-left pull-left">
+                        <?php the_sub_field('full_module_content'); ?>
+                    </article>
+
+                </div>
+            </div>
+            
+        </div>
+
 
 
     <?php elseif(get_row_layout() == "video_full_module"): ?>
@@ -316,4 +370,26 @@
         endif; ?>
 
 
+    <?php elseif(get_row_layout() == "vr_tour"):
+    $videoImg = get_sub_field('video_placeholder_image'); ?>
+
+            <section id="vr" style="background-image: url(<?php echo $videoImg['sizes']['full-banner']; ?>);">
+                <video autoplay mute loop poster="<?php echo $videoImg['sizes']['full-banner']; ?>">
+                    <source src="<?php the_sub_field('video'); ?>" type="video/mp4">
+                </video>
+                <div class="inner-wrap">
+                    <div class="text-wrap">
+                        <?php 
+                            echo (get_sub_field('title') ? '<h2>' . get_sub_field('title') . '</h2>' : '');
+                            echo (get_sub_field('title') ? '<p>' . get_sub_field('description') . '</p>' : '');
+                            if(get_sub_field('show_in_lightbox')) { $lightbox = 'vr-link'; } else { $lightbox = ''; }
+                            echo (get_sub_field('button_link') ? '<a href="' . get_sub_field('button_link') . '" class="btn white-outline ' . $lightbox . '">' . get_sub_field('button_label') . '</a>' : ''); ?>
+                    </div>
+                </div>
+            </section>
+
 <?php endif; endwhile; ?>
+
+
+
+
