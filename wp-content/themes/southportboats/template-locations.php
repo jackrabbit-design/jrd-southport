@@ -72,8 +72,8 @@
             new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
             // Disable drag and zoom handlers.
-            map.dragging.disable();
-            map.touchZoom.disable();
+            // map.dragging.disable();
+            // map.touchZoom.disable();
             map.doubleClickZoom.disable();
             map.scrollWheelZoom.disable();
 
@@ -165,11 +165,12 @@
 
             myLayer.eachLayer(function(marker) {
                 marker.on('click', function(e) {
+                	// console.log('test');
                     var markerid = marker.feature.properties.id;
                     $('#map-box .clicker[data-marker='+markerid+']').trigger('click');
                     clickIt('#map-box .location[data-marker='+markerid+']');
                     map.panTo(marker.getLatLng());
-                    marker.closePopup();
+                    //marker.closePopup(); WHY WAS THIS HERE? IT BORKED EVERYTHING
 
                     // http://leafletjs.com/reference.html#popup
                 });

@@ -221,32 +221,32 @@ $(document).on('scroll ready', function(){
 	}
 });
 
-$('.load-more a').on('click', function(e)  {
-	$('.loading').show(); // show loader animation
-	e.preventDefault();
-   // $('.text_holder').append("<div class=\"loader\">&nbsp;</div>");
-	$(this).parent().addClass('loading');
-	var link = jQuery(this).attr('href');
+// $('.load-more a').on('click', function(e)  {
+// 	$('.loading').show(); // show loader animation
+// 	e.preventDefault();
+//    // $('.text_holder').append("<div class=\"loader\">&nbsp;</div>");
+// 	$(this).parent().addClass('loading');
+// 	var link = jQuery(this).attr('href');
 
-	var $content = '.scroll-content';
-	var $nav_wrap = '.load-more';
-	var $anchor = '.load-more a';
-	var $next_href = $($anchor).attr('href'); // Get URL for the next set of posts
+// 	var $content = '.scroll-content';
+// 	var $nav_wrap = '.load-more';
+// 	var $anchor = '.load-more a';
+// 	var $next_href = $($anchor).attr('href'); // Get URL for the next set of posts
 
-	$.get(link+'', function(data){
-		var $timestamp = new Date().getTime();
-		var $new_content = $($content, data).wrapInner('').html(); // Grab just the content
-		$next_href = $($anchor, data).attr('href'); // Get the new href
-		$('.scroll-content .post-content:last-child').after($new_content); // Append the new content
-		$('.load-more a').attr('href', $next_href); // Change the next URL
-		var nlink = $('.load-more a').attr('href');
-		if(nlink == link){ $('.load-more a').remove(); }
+// 	$.get(link+'', function(data){
+// 		var $timestamp = new Date().getTime();
+// 		var $new_content = $($content, data).wrapInner('').html(); // Grab just the content
+// 		$next_href = $($anchor, data).attr('href'); // Get the new href
+// 		$('.scroll-content .post-content:last-child').after($new_content); // Append the new content
+// 		$('.load-more a').attr('href', $next_href); // Change the next URL
+// 		var nlink = $('.load-more a').attr('href');
+// 		if(nlink == link){ $('.load-more a').remove(); }
 
-	}).done(function(data){
-		$aCount = 0;
-		$('.loading').hide(); //hide loader animation
-	});
-});
+// 	}).done(function(data){
+// 		$aCount = 0;
+// 		$('.loading').hide(); //hide loader animation
+// 	});
+// });
 
     // Set up isOnScreen
 
@@ -286,32 +286,32 @@ $('.load-more a').on('click', function(e)  {
         }
     });
 
-    $('.load-more a').on('click', function(e)  {
-        $('.loader').show(); // show loader animation
-        e.preventDefault();
-       // $('.text_holder').append("<div class=\"loader\">&nbsp;</div>");
-        $(this).parent().addClass('loading');
-        var link = jQuery(this).attr('href');
+    // $('.load-more a').on('click', function(e)  {
+    //     $('.loader').show(); // show loader animation
+    //     e.preventDefault();
+    //    // $('.text_holder').append("<div class=\"loader\">&nbsp;</div>");
+    //     $(this).parent().addClass('loading');
+    //     var link = jQuery(this).attr('href');
 
-        var $content = '.scroll-content';
-        var $nav_wrap = '.load-more';
-        var $anchor = '.load-more a';
-        var $next_href = $($anchor).attr('href'); // Get URL for the next set of posts
+    //     var $content = '.scroll-content';
+    //     var $nav_wrap = '.load-more';
+    //     var $anchor = '.load-more a';
+    //     var $next_href = $($anchor).attr('href'); // Get URL for the next set of posts
 
-        $.get(link+'', function(data){
-            var $timestamp = new Date().getTime();
-            var $new_content = $($content, data).wrapInner('').html(); // Grab just the content
-            $next_href = $($anchor, data).attr('href'); // Get the new href
-            $('.scroll-content .post-content:last-child').after($new_content); // Append the new content
-            $('.load-more a').attr('href', $next_href); // Change the next URL
-            var nlink = $('.load-more a').attr('href');
-            if(nlink == link){ $('.load-more a').remove(); }
+    //     $.get(link+'', function(data){
+    //         var $timestamp = new Date().getTime();
+    //         var $new_content = $($content, data).wrapInner('').html(); // Grab just the content
+    //         $next_href = $($anchor, data).attr('href'); // Get the new href
+    //         $('.scroll-content .post-content:last-child').after($new_content); // Append the new content
+    //         $('.load-more a').attr('href', $next_href); // Change the next URL
+    //         var nlink = $('.load-more a').attr('href');
+    //         if(nlink == link){ $('.load-more a').remove(); }
 
-        }).done(function(data){
-            $aCount = 0;
-            $('.loader').hide(); //hide loader animation
-        });
-    });
+    //     }).done(function(data){
+    //         $aCount = 0;
+    //         $('.loader').hide(); //hide loader animation
+    //     });
+    // });
 
 
 $('.bio-more').on('click', function(){
