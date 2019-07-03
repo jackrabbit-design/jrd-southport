@@ -151,7 +151,13 @@ function _gallerySlider(){
 }
 
 function _featuresFilter(){
-	$('#features').mixItUp();
+	$('#features').mixItUp({
+        callbacks: {
+            onMixEnd: function(state){
+              equalheight('#features li');
+            }
+        }
+    });
 }
 
 function _faqsAccordion(){
@@ -167,6 +173,9 @@ $(window).resize(function(){
 		$("#mobile-menu").removeAttr("style");
 		$("#mobile-nav > ul > li > ul").removeAttr("style");
 		$('#toggle_menu_btn').removeClass('active');
+        $('#faqs-wrap .categories, #faqs-wrap .main-right').stick_in_parent({
+            offset_top: 20
+        });
 	}
 });
 
@@ -212,32 +221,32 @@ $(document).on('scroll ready', function(){
 	}
 });
 
-// $('.load-more a').on('click', function(e)  {
-// 	$('.loading').show(); // show loader animation
-// 	e.preventDefault();
-//    // $('.text_holder').append("<div class=\"loader\">&nbsp;</div>");
-// 	$(this).parent().addClass('loading');
-// 	var link = jQuery(this).attr('href');
+$('.load-more a').on('click', function(e)  {
+	$('.loading').show(); // show loader animation
+	e.preventDefault();
+   // $('.text_holder').append("<div class=\"loader\">&nbsp;</div>");
+	$(this).parent().addClass('loading');
+	var link = jQuery(this).attr('href');
 
-// 	var $content = '.scroll-content';
-// 	var $nav_wrap = '.load-more';
-// 	var $anchor = '.load-more a';
-// 	var $next_href = $($anchor).attr('href'); // Get URL for the next set of posts
+	var $content = '.scroll-content';
+	var $nav_wrap = '.load-more';
+	var $anchor = '.load-more a';
+	var $next_href = $($anchor).attr('href'); // Get URL for the next set of posts
 
-// 	$.get(link+'', function(data){
-// 		var $timestamp = new Date().getTime();
-// 		var $new_content = $($content, data).wrapInner('').html(); // Grab just the content
-// 		$next_href = $($anchor, data).attr('href'); // Get the new href
-// 		$('.scroll-content .post-content:last-child').after($new_content); // Append the new content
-// 		$('.load-more a').attr('href', $next_href); // Change the next URL
-// 		var nlink = $('.load-more a').attr('href');
-// 		if(nlink == link){ $('.load-more a').remove(); }
+	$.get(link+'', function(data){
+		var $timestamp = new Date().getTime();
+		var $new_content = $($content, data).wrapInner('').html(); // Grab just the content
+		$next_href = $($anchor, data).attr('href'); // Get the new href
+		$('.scroll-content .post-content:last-child').after($new_content); // Append the new content
+		$('.load-more a').attr('href', $next_href); // Change the next URL
+		var nlink = $('.load-more a').attr('href');
+		if(nlink == link){ $('.load-more a').remove(); }
 
-// 	}).done(function(data){
-// 		$aCount = 0;
-// 		$('.loading').hide(); //hide loader animation
-// 	});
-// });
+	}).done(function(data){
+		$aCount = 0;
+		$('.loading').hide(); //hide loader animation
+	});
+});
 
     // Set up isOnScreen
 
@@ -283,12 +292,12 @@ $(document).on('scroll ready', function(){
        // $('.text_holder').append("<div class=\"loader\">&nbsp;</div>");
         $(this).parent().addClass('loading');
         var link = jQuery(this).attr('href');
-        
+
         var $content = '.scroll-content';
         var $nav_wrap = '.load-more';
         var $anchor = '.load-more a';
         var $next_href = $($anchor).attr('href'); // Get URL for the next set of posts
-    
+
         $.get(link+'', function(data){
             var $timestamp = new Date().getTime();
             var $new_content = $($content, data).wrapInner('').html(); // Grab just the content
@@ -297,8 +306,8 @@ $(document).on('scroll ready', function(){
             $('.load-more a').attr('href', $next_href); // Change the next URL
             var nlink = $('.load-more a').attr('href');
             if(nlink == link){ $('.load-more a').remove(); }
-            
-        }).done(function(data){ 
+
+        }).done(function(data){
             $aCount = 0;
             $('.loader').hide(); //hide loader animation
         });
@@ -323,7 +332,21 @@ $('#event-filter select').on('change', function () {
 
 
 $('.video-link').magnificPopup({type: 'iframe'});
-$('.image-link').magnificPopup({type: 'image'});
+$('.vr-link').magnificPopup({type: 'iframe'});
+
+$('.gallery-slider').each(function(){
+    $(this).magnificPopup({
+        type: 'image',
+        delegate: '.image-link',
+        gallery:{
+            enabled: true,
+            arrowMarkup: '<span class="popup-nav"><button type="button" class="mfp-prevent-close gallery-arrow-%title% %title%"></button></span>', // markup of an arrow button
+            tPrev: 'left', // title for left button
+            tNext: 'right', // title for right button
+            tCounter: '<span class="mfp-counter">%curr% of %total%</span>' // markup of counter
+        }
+    });
+})
 
 $('#toggle_menu_btn').click(function(){
     $(this).toggleClass('active');
@@ -335,3 +358,73 @@ $('#mobile-menu .menu-item-has-children').click(function(){
    $(this).children('ul').slideToggle(200);
 });
 
+
+
+$('.feature-filter-mobile .select-wrap select').on('change', function(){
+    var filter = $(this).val();
+    $('.feature-filter-desktop li[data-filter=".' + filter + '"]').trigger('click');
+});
+
+
+
+
+
+
+equalheight = function(container){
+
+var currentTallest = 0,
+     currentRowStart = 0,
+     rowDivs = new Array(),
+     $el,
+     topPosition = 0;
+ $(container).each(function() {
+
+   $el = $(this);
+   $($el).height('auto')
+   topPostion = $el.position().top;
+
+   if (currentRowStart != topPostion) {
+     for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+       rowDivs[currentDiv].height(currentTallest);
+     }
+     rowDivs.length = 0; // empty the array
+     currentRowStart = topPostion;
+     currentTallest = $el.height();
+     rowDivs.push($el);
+   } else {
+     rowDivs.push($el);
+     currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
+  }
+   for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+     rowDivs[currentDiv].height(currentTallest);
+   }
+ });
+}
+
+// SEE MIX IT UP PLUGIN CALL ABOVE FOR WINDOW LOAD INIT
+// $(window).load(function() {
+//   equalheight('.main article');
+// });
+
+$(window).resize(function(){
+  equalheight('#features li');
+});
+
+
+    $('.categories a').click(function(){
+        $('html, body').animate({
+            scrollTop: $( $(this).attr('href') ).offset().top
+        }, 500);
+        return false;
+    });
+
+    $('.locations-state').click(function(){
+        $(this).next('.locations').addClass('active');
+        $(this).parent().parent().addClass('hide');
+        return false;
+    })
+    $('.locations h6 a').click(function(){
+        $(this).parent().parent().removeClass('active');
+        $(this).parent().parent().parent().parent().removeClass('hide');
+        return false;
+    })
