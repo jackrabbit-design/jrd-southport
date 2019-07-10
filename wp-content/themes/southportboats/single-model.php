@@ -1,14 +1,14 @@
 <?php get_header(); the_post(); ?>
 
-    <div id="pg-title" style="background-image:url(<?php bloginfo('url');?>/ui/images/interior-banner.jpg)"></div>
 
     <div id="model-slider-wrap">
         <ul class="cycle-slideshow" data-cycle-fx="fade"
             data-cycle-pager=".model-pager"
             data-cycle-swipe=true
-            data-cycle-swipe-fx=scrollHorz
-             data-cycle-timeout=0
-            data-cycle-slides=">li">
+            data-cycle-swipe-fx="scrollHorz"
+            data-cycle-timeout="5000"
+            data-cycle-slides=">li"
+            data-cycle-pause-on-hover="true">
 
             <?php if( have_rows('model_banner_images') ):
                 while ( have_rows('model_banner_images') ) : the_row();
@@ -16,12 +16,14 @@
                 $modelBanner = get_sub_field('model_banner_image'); ?>
 
                     <li>
-                        <div class="banner-img" style="background-image:url(<?php echo $modelBanner['sizes']['full-banner']; ?>)"></div>
+                        <div class="banner-img" style="background-image:url(<?php echo $modelBanner['sizes']['full-banner-large']; ?>)"></div>
                         <div class="banner-text">
                             <div class="container">
                                 <div class="container-inner">
-                                    <h2><?php the_title(); ?></h2>
-                                    <p><?php the_sub_field('model_banner_text'); ?></p>
+                                    <div class="text-wrap">
+                                        <h2><?php the_title(); ?></h2>
+                                        <!-- <p><?php the_sub_field('model_banner_text'); ?></p> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -35,6 +37,7 @@
         <div class="model-pager-wrap">
             <div class="container">
                 <div class="container-inner">
+                    <?php echo (get_field('model_vr_tour_link') ? '<a href="' . get_field('model_vr_tour_link') . '" class="link more vr-link">' . get_field('model_vr_tour_label') . '</a>' : ''); ?>
                     <div class="model-pager"></div>
                 </div>
             </div>
@@ -46,6 +49,19 @@
             <div class="container-inner clearfix">
                 <article id="article" class="pg-content main-left pull-left">
                     <?php the_content(); ?>
+
+                    <?php if( have_rows('model_attributes') ): ?>
+                        <ul id="attributes">
+
+                            <?php while ( have_rows('model_attributes') ) : the_row(); ?>
+
+                            <li><strong><?php the_sub_field('model_attribute_label'); ?>:</strong> <span><?php the_sub_field('model_attribute_value'); ?></span></li>
+
+                            <?php endwhile; ?>
+                        </ul>
+
+                    <?php else: endif; ?>
+
                 </article>
 
                 <aside id="aside" class="main-right pull-right">
@@ -86,16 +102,11 @@
 
                                 }
 
-
-
-
                             endwhile;
                         else: endif;
                     ?>
 
-
-
-                <?php if($types) { ?>
+                <?php if($cats) { ?>
 
                     <div class="filter-main-wrap">
                         <div class="visible-xs feature-filter-mobile">
@@ -103,7 +114,7 @@
                                 <select>
                                     <option class="filter" data-filter="all">All</option>
                                     <?php foreach($cats as $slug => $label) { ?>
-                                        <option class="filter" data-filter=".<?php echo $slug ?>"><?php echo $label ?></option>
+                                        <option class="filter" value="<?php echo $slug; ?>" data-filter=".<?php echo $slug ?>"><?php echo $label ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -147,7 +158,28 @@
 
                                         the_sub_field('model_feature');
 
-                                        echo (get_sub_field('model_feature_link_optional') ? '</a>' : ''); ?></h3>
+                                        echo (get_sub_field('model_feature_link_optional') ? '</a>' : ''); ?>
+                                    <span>
+                                        <?php
+                                            $obj = get_sub_field_object('model_feature_type'); // finding array of field details
+                                            $obj = $obj['choices']; // refining array
+                                            $types = get_sub_field('model_feature_type');
+                                            $cats = array();
+                                            if($types) {
+                                                foreach($types as $type) {
+
+                                                    if(!in_array($type, $cats)) {
+                                                        $cats[$type] = $obj[$type]; // making an array based on the $obj variable
+                                                    }
+                                                }
+                                            }
+                                            $i = 1;
+                                            foreach($cats as $key => $value){
+                                                echo $value;
+                                                if($i < count($cats)) echo ', ';
+                                                $i++;
+                                            }; ?>
+                                    </span></h3>
                                     <p><?php the_sub_field('model_feature_description'); ?></p>
                                     <?php echo (get_sub_field('model_feature_link_optional') ? '<a href="' . get_sub_field('model_feature_link_optional') . '" class="link more">Read More</a>' : ''); ?>
                                 </div>

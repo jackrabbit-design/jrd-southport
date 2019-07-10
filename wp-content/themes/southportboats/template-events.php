@@ -11,23 +11,29 @@
 
 <?php get_sidebar('event-filter'); ?>
 
-<?php get_sidebar('full-modules'); ?>
+<?php //get_sidebar('full-modules'); ?>
 
 <section id="events-wrap">
     <div class="container">
         <div class="container-inner">
 
-                <?php $args = array(
-                    'post_type' => 'event', 
-                    'posts_per_page' => '6', 
-                    'paged' => $paged, 
-                    'orderby' => 'meta_value',
-                    'meta_key' => 'event_date',
-                    'order' => 'ASC'
-                );
+                <?php 
+	            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;   
+				$args = array(
+				    'post_type' => 'event', 
+				    'posts_per_page' => '6', 
+				    'paged' => $paged, 
+				    'orderby' => 'meta_value',
+				    'meta_key' => 'event_date',
+				    'meta_value'   => date( "Ymd" ),
+				    'meta_compare' => '>',
+				    'order' => 'ASC'
+				);
+    
                 query_posts($args);
-                ?>
-
+                
+               ?>
+				
                 <ul id="events" class="scroll-content">
 
                      <?php while ( have_posts() ) : the_post();
@@ -39,7 +45,11 @@
                         $today = strtotime(date('Y-m-d'));
 
                         if($date <= $today) continue; 
-                         ?>
+
+                        $date = DateTime::createFromFormat('Ymd', get_field('event_date'));
+                        $dateEnd = DateTime::createFromFormat('Ymd', get_field('event_date_end'));
+
+                        ?>
 
                          <li class="post-content">
                              <a href="<?php the_permalink(); ?>" class="img-link">
@@ -48,12 +58,17 @@
                                 <?php } ?>
                             </a>
                             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                            <h5><?php $date = DateTime::createFromFormat('Ymd', get_field('event_date')); echo $date->format('F j, Y'); ?>  <span>|</span>  <?php the_field('event_location'); ?></h5>
+                            <h5><?php if(get_field('event_date_end')) {
+                                    echo $date->format('F j, Y') . ' - ' . $dateEnd->format('F j, Y');
+                                } else { 
+                                    echo $date->format('F j, Y'); 
+                                };?> <span>|</span>  <?php the_field('event_location'); ?></h5>
                             <p><?php the_field('event_teaser'); ?></p>
-                            <a href="<?php echo (get_field('event_button_link') ? get_field('event_button_link') : get_the_permalink()); ?>" class="link more"><?php the_field('event_button_label'); ?></a>
                     </li>
                 <?php endwhile; ?>
                </ul>
+            
+      
                 <div class="loader">
                     <span>LOADING</span>
                 </div>

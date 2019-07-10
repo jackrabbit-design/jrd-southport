@@ -1,8 +1,6 @@
 <div id="comments">
-    <h3>Comments</h3>
 <?php if ( post_password_required() ) : ?>
     <p class="nopassword"><?php _e( 'This post is password protected. Enter the password to view any comments.' ); ?></p>
-</div><!-- #comments -->
 <?php
 		/* Stop the rest of comments.php from being processed,
 		 * but don't kill the script entirely -- we still have
@@ -13,51 +11,54 @@
 ?>
 
 <?php if(comments_open()) : ?>
-<div class="leaveComment clearfix">
-     <h3>Write a Comment</h3>
-	<?php if(get_option('comment_registration') && !$user_ID) : ?>  
-        <p>You must be <a href="#" class="loginlink">logged in</a> to post a comment.</p>
-    <?php else : ?> 
-	<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" class="gform_wrapper" id="commentform">
-	<div class="contact-block">
 
-	<?php if($user_ID) : ?>  
-                <p style="margin-bottom:20px">Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="Log out of this account">Log out &raquo;</a></p>
-            
-	<?php else : ?>
-	   <p>
-          <label for="author_field">Name <?php if($req){ ?><span class="gfield_required">*</span><?php } ?></label>
-          <input type="text" class="input-text txt medium clearFieldBlurred" value="<?php if(!Empty($comment_author)){ echo $comment_author; } ?>" id="author_field" name="author" rel=">Name <?php if($req) echo "<span>*</span>";  ?>" tabindex="51" />
-	   </p>
-	   <p>
-          <label for="email_field">Email Address <?php if($req){ ?><span class="gfield_required">*</span><?php } ?></label>
-          <input type="text" class="input-text txt medium clearFieldBlurred" value="<?php if(!Empty($comment_author_email)){ echo $comment_author_email; } ?>" id="email_field" name="email" rel="Email (not published) <?php if($req) echo "<span>*</span>"; ?>" tabindex="52" />
-	   </p>
-        <?php endif; ?>
-        <p class="text-area comment">
-          <label for="comment_field">Your Comment <?php if($req){ ?><span class="gfield_required">*</span><?php } ?></label>
-          <textarea class="textarea medium clearFieldBlurred" id="comment_field" name="comment" rel="Comment" tabindex="53"></textarea>
-        </p>
-        <div class="clear"></div>
-        <div class="btn">
-        <input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
-          <button type="submit" class="link-common"><span>Submit</span></button>
-        </div>
-      </div>
-      <?php do_action('comment_form', $post->ID); ?>  
-    </form>
-    <?php endif; ?> 
-</div>	
+            <div class="leaveComment clearfix">
+                <h3>Leave a Comment</h3>
+                <?php if(get_option('comment_registration') && !$user_ID) : ?>  
+                    <p>You must be <a href="#" class="loginlink">logged in</a> to post a comment.</p>
+                
+                <?php else : ?> 
+                    <form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" class="gform_wrapper" id="commentform">
+
+                        <?php if($user_ID) : ?>  
+                            <p style="margin-bottom:20px">Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="Log out of this account">Log out &raquo;</a></p>
+                            <ul>
+                                
+                        <?php else : ?>
+                            <ul>
+                                <li>
+                                    <label for="author_field">Name <?php if($req){ ?><span class="gfield_required">*</span><?php } ?></label>
+                                    <input type="text" class="input-text txt medium clearFieldBlurred" value="<?php if(!Empty($comment_author)){ echo $comment_author; } ?>" id="author_field" name="author" rel=">Name <?php if($req) echo "<span>*</span>";  ?>" tabindex="51" />
+                                </li>
+                                <li>
+                                    <label for="email_field">Email <?php if($req){ ?><span class="gfield_required">*</span><?php } ?></label>
+                                    <input type="text" class="input-text txt medium clearFieldBlurred" value="<?php if(!Empty($comment_author_email)){ echo $comment_author_email; } ?>" id="email_field" name="email" rel="Email (not published) <?php if($req) echo "<span>*</span>"; ?>" tabindex="52" />
+                                </li>
+                        <?php endif; ?>
+                                <li class="text-area comment">
+                                    <label for="comment_field">Comment <?php if($req){ ?><span class="gfield_required">*</span><?php } ?></label>
+                                    <textarea class="textarea medium clearFieldBlurred" id="comment_field" name="comment" rel="Comment" tabindex="53"></textarea>
+                                </li>
+                                <li class="btn">
+                                    <input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
+                                    <button type="submit" class="btn black-btn"><span>Send</span></button>
+                                </li>
+                            </ul>
+                        <?php do_action('comment_form', $post->ID); ?>  
+                    </form>
+                <?php endif; ?> 
+            </div>  
+
 <?php else : ?>  
     <p>The comments are closed.</p>  
 <?php endif; ?> 	
 	
 <?php if ( have_comments() ) : ?>
-            <h4>
+            <h3>
             <?php
 			printf( _n( '1 Comment', '%1$s Comments', get_comments_number(), 'jhfn_comment' ),
 			number_format_i18n( get_comments_number() ), '<em>' . get_the_title() . '</em>' );
-			?></h4>
+			?></h3>
 
 <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
 			
@@ -83,7 +84,7 @@
 <?php endif; // check for comment navigation ?>
 
 <?php else : // or, if we don't have comments: ?>
-<div class="heading"> <span class="title">0 Comments</span> </div>
+<h3>0 Comments</h3>
 <p>There aren't currently any comments on this blog entry.</p>
 <?	/* If there are no comments and comments are closed,
 	 * let's leave a little note, shall we?

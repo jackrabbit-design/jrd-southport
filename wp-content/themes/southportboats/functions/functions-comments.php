@@ -16,11 +16,8 @@ function jhfn_comment($comment, $args, $depth) {
 ?>  
 
 <li>
-    <h4><span><?php echo $comment->comment_author; ?></span> wrote:</h4>
+    <h4><?php echo $comment->comment_author; ?><span><?php printf(__('%1$s | %2$s'), get_comment_date('F j,Y'),  get_comment_time('g:ia')); ?> <?php edit_comment_link(__('Edit'),'  ','') ?></span></h4>
     <?php comment_text(); ?>
-    <p class="commentDate">
-        Written on <?php printf(__('%1$s at %2$s'), get_comment_date('n/j/Y'),  get_comment_time('g:ia')); ?> <?php edit_comment_link(__('Edit'),'  ','') ?>
-    </p>
 </li>
 
 <?php }

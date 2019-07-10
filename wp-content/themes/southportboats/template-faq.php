@@ -13,6 +13,41 @@
     <section id="faqs-wrap">
         <div class="container">
             <div class="container-inner clearfix">
+
+
+                <aside class="main-right pull-right">
+
+                    <div class="categories">
+                        <h4>Categories</h4>
+                        
+                        <ul>
+                            <?php //start by fetching the terms for the taxonomy
+                                $terms = get_terms( 'faq-category', array(
+                                    'orderby'    => 'title',
+                                    'hide_empty' => 0
+                                ) );
+
+                                // now run a query for each term
+                                foreach( $terms as $term ) {
+                                     $args = array(
+                                        'post_type' => 'faq',
+                                        'faq-category' => $term->slug
+                                    );
+                                    $query = new WP_Query( $args );
+                                             
+                                    echo'<li><a href="#faq-' . $term->slug . '">' . $term->name . '</a></li>';
+                                     
+                                    wp_reset_postdata();
+                             } ?>
+                        </ul>
+                    </div><!--categories-->  
+                    
+
+                </aside>
+
+
+
+
                 <div class="main-left pull-left">
                     <ul class="main-acc-wrap">
 
@@ -52,36 +87,6 @@
                  </ul>
                 </div>
                 
-                <aside class="main-right pull-right">
-
-                    <div class="categories">
-                        <h4>Categories</h4>
-                        
-                        <ul>
-                            <?php //start by fetching the terms for the taxonomy
-                                $terms = get_terms( 'faq-category', array(
-                                    'orderby'    => 'title',
-                                    'hide_empty' => 0
-                                ) );
-
-                                // now run a query for each term
-                                foreach( $terms as $term ) {
-                                     $args = array(
-                                        'post_type' => 'faq',
-                                        'faq-category' => $term->slug
-                                    );
-                                    $query = new WP_Query( $args );
-                                             
-                                    echo'<li><a href="#faq-' . $term->slug . '">' . $term->name . '</a></li>';
-                                     
-                                    wp_reset_postdata();
-                             } ?>
-                        </ul>
-                    </div><!--categories-->  
-                    
-                    <?php get_sidebar('modules'); ?>
-
-                </aside>
             </div>
         </div>
     </section>

@@ -6,7 +6,7 @@
 
 include_once 'functions/functions-post-types.php';
 //include_once 'functions/functions-widgets.php';
-//include_once 'functions/functions-comments.php';
+include_once 'functions/functions-comments.php';
 
 
 /* ========================================================================= */
@@ -36,6 +36,7 @@ add_filter('login_errors',create_function('$a', "return null;"));
 add_theme_support( 'post-thumbnails' );
 set_post_thumbnail_size( 64, 64, true );
 add_image_size( 'full-banner', 1500, 700, true);
+add_image_size( 'full-banner-large', 2000, 1300, true);
 add_image_size( 'model-features-image', 580, 375, true);
 add_image_size( 'models-image', 680, 515, true);
 add_image_size( 'featured-image', 555, 320, true);
@@ -43,6 +44,7 @@ add_image_size( 'news-teaser-image', 520, 300, true);
 add_image_size( 'sidebar-image', 415, 260, true);
 add_image_size( 'location-image', 430, 300, true);
 add_image_size( 'image-row-image', 478, 474, true);
+add_image_size( 'takeover-image', 650, 1000, true);
 //add_image_size( 'size-name', 100, 100, true);
 
 /* Declare Nav Menu Areas */
@@ -258,6 +260,13 @@ function new_excerpt_more( $more ) {
 add_filter('excerpt_more', 'new_excerpt_more');
 
 
+
+function new_excerpt_length($length) {
+    return 40;
+}
+add_filter('excerpt_length', 'new_excerpt_length');
+
+
 /* ========================================================================= */
 /*  Browser detection body_class() output */
 /* ========================================================================= */
@@ -360,6 +369,21 @@ if ( is_admin() ) {
     }
     add_filter('wpseo_pre_analysis_post_content', 'add_custom_to_yoast');
 }
+
+
+
+
+
+/* ========================================================================= */
+/* !CUSTOM SHORTCODES */
+/* ========================================================================= */
+
+function jrd_button($atts, $content = null) {
+   extract(shortcode_atts(array('link' => '#'), $atts));
+   return '<a class="black-btn btn" href="'.$link.'"><span>' . do_shortcode($content) . '</span></a>';
+}
+add_shortcode('button', 'jrd_button');
+
 
 /* ========================================================================= */
 /* !WORDPRESS PAGINATION SCRIPT */

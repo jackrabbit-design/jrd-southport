@@ -6,9 +6,6 @@
 ?>   
 
 
-    <div id="pg-title" style="background-image:url(<?php bloginfo('url');?>/ui/images/interior-banner.jpg)">
-        <h2><?php the_title(); ?></h2>
-    </div>
     
     <section id="model-landing-wrap">
         <ul id="model-landing">
@@ -24,7 +21,7 @@
                             <div class="container-inner">
                                 <div class="text-box">
                                     <h3><?php the_title(); ?></h3>
-                                    <p><?php the_field('teaser'); ?>.</p>
+                                    <p><?php the_field('teaser'); ?></p>
                                     <a href="<?php the_permalink(); ?>" class="btn black-outline">LEARN MORE</a>
                                 </div>
                             </div>

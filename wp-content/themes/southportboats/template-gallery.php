@@ -28,10 +28,10 @@
             <div class="container-inner">
                 <ul id="gallery-wrap">
 
-                    <?php query_posts('post_type=gallery-item&posts_per_page=-1&orderby=date&order=DESC');
+                    <?php query_posts('post_type=gallery-item&posts_per_page=-1&orderby=menu_order&order=ASC');
                         while ( have_posts() ) : the_post(); ?>
 
-                        <li>
+                        <li id="<?php the_slug(); ?>">
                             <div class="top-box clearfix">
                                 <div class="box-one pull-left">
                                     <h4><?php the_title(); ?></h4>
@@ -48,7 +48,7 @@
                                     $galleryImage = get_sub_field('gallery_image');
                                     ?>
                                         <li>
-                                            <a href="<?php echo $galleryImage['sizes']['models-image'] ?>" class="image-link"><img src="<?php echo $galleryImage['sizes']['model-features-image'] ?>" alt="<?php the_sub_field('gallery_image_title'); ?>" /></a>
+                                            <a href="<?php echo $galleryImage['sizes']['large'] ?>" class="image-link"><img src="<?php echo $galleryImage['sizes']['model-features-image'] ?>" alt="<?php the_sub_field('gallery_image_title'); ?>" /></a>
                                         </li>
 
                                     <?php endwhile;

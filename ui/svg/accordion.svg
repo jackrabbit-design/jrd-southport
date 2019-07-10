@@ -1,0 +1,7 @@
+<svg width="17" height="32" viewBox="0 0 17 32" xmlns="http://www.w3.org/2000/svg">
+    <title>accordion</title>
+    <g fill="none" fill-rule="evenodd">
+        <path d="M0 0h18v40H0z"/>
+        <path d="M10 7V0H7v7H0v3h7v7h3v-7h7V7h-7zM0 29h17v3H0v-3z" fill="#000" fill-rule="nonzero"/>
+    </g>
+</svg>

@@ -4,13 +4,20 @@
         <h2>Events</h2>
     </div>
     
-    
+    <?php 
+        $date = DateTime::createFromFormat('Ymd', get_field('event_date'));
+        $dateEnd = DateTime::createFromFormat('Ymd', get_field('event_date_end')); 
+    ?>
     <div id="main-content">
         <div class="container">
             <div class="container-inner clearfix">
                 <article id="article" class="pg-content main-left pull-left">
                     <h3><?php the_title(); ?></h3>
-                    <h5><?php $date = DateTime::createFromFormat('Ymd', get_field('event_date')); echo $date->format('F j, Y'); ?>  <span>|</span>  <?php the_field('event_location'); ?></h5>
+                    <h5><?php if(get_field('event_date_end')) {
+                            echo $date->format('F j, Y') . ' - ' . $dateEnd->format('F j, Y');
+                        } else { 
+                            echo $date->format('F j, Y'); 
+                        };?>  <span>|</span>  <?php the_field('event_location'); ?></h5>
 
 
 
@@ -29,11 +36,14 @@
                 </aside>
 
             </div>
+
+            <?php if(get_field('display_vip_registration_form') == "Yes") { ?>
             <section id="vip-registration" class="clearfix">
                 <div class="container-inner clearfix">
                     <?php gravity_form(2, true, false, false, '', false); ?>
                 </div>
             </section>
+            <?php }; ?>
         </div>
     </div><!--main-content-->
 
