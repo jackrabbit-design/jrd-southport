@@ -428,3 +428,19 @@ $(window).resize(function(){
         $(this).parent().parent().parent().parent().removeClass('hide');
         return false;
     })
+
+
+        $('.featured-slideshow').slick({
+            autoplay: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            swipeToSlide: true,
+            infinite: true,
+            fade: false,
+            speed: 500,
+            swipe: true,
+            draggable: true,
+            dots: true,
+            arrows: false
+        });
+

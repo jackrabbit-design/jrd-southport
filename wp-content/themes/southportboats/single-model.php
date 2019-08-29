@@ -145,13 +145,19 @@
 
                             <li class="mix <?php echo implode(' ', get_sub_field('model_feature_type')); ?>">
 
-                                <?php if($modelFeatureImage = get_sub_field('model_feature_image')) {
-                                    echo (get_sub_field('model_feature_link_optional') ? '<a href="' . get_sub_field('model_feature_link_optional') . '" class="img-link">' : ''); ?>
 
-                                        <img src="<?php echo $modelFeatureImage['sizes']['model-features-image']; ?>" alt="<?php echo $modelFeatureImage['alt']; ?>" />
+                                <?php 
+                                $modelFeatureImages = get_sub_field('model_feature_image');
+                                if( $modelFeatureImages ){
+                                    echo (get_sub_field('model_feature_link_optional') ? '<a href="' . get_sub_field('model_feature_link_optional') . '" class="img-link">' : '');
+                                    echo '<div class="featured-slideshow-container"><div class="featured-slideshow">';
+                                    foreach( $modelFeatureImages as $modelFeatureImage ){
+                                            echo '<div class="featured-slide"><img src="' . $modelFeatureImage['sizes']['model-features-image'] . '" alt="' . $modelFeatureImage['alt'] . '" /></div>';
+                                    }
+                                    echo '</div><div class="dot-control"></div></div>';
+                                    echo (get_sub_field('model_feature_link_optional') ? '</a>' : '');
+                                }; ?>
 
-                                    <?php echo (get_sub_field('model_feature_link_optional') ? '</a>' : '');
-                                } ?>
                                 <div class="box-wrap">
 
                                     <h3><?php echo (get_sub_field('model_feature_link_optional') ? '<a href="' . get_sub_field('model_feature_link_optional') . '">' : '');
