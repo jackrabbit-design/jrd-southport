@@ -322,6 +322,71 @@
 
 
 
+    <?php elseif(get_row_layout() == "featured_module"): ?>
+    
+		<section class="featured">
+		    <div class="container">
+
+
+				<?php 
+					$featured_header = '';
+					$featured_title = get_sub_field('featured_title');
+					$featured_text = get_sub_field('featured_text');
+					$featured_link = esc_url( get_sub_field( 'featured_link' )['url'] );
+					$featured_img = get_sub_field('featured_image');
+					if(get_sub_field('show_latest_news_or_blog_post')) {
+					    $args = array(
+					        'post_type' => array('news-article', 'blog-post'),
+					        'posts_per_page' => 1,
+					        'orderby' => 'date',
+					        'order' => 'DESC'
+					    ); 
+					    $query = new WP_Query($args);
+					    if ( $query->have_posts() ) {
+					        while ( $query->have_posts() ) { 
+					            $query->the_post();
+					            if( get_post_type() == 'news-article' ) { 
+					            	$featured_header = '<header><h2>Latest News</h2><a href="'. get_permalink(246) . '" class="link more">VIEW ALL NEWS</a></header>';
+					            	$featured_title = get_the_title();
+					            	$featured_text = get_the_excerpt();
+					            	$featured_link = get_the_permalink();
+					            	$featured_img = get_field('news_teaser_image');
+					            	
+					            } elseif( get_post_type() == 'blog-post' ) { 
+					            	$featured_header = '<header><h2>Blog Updates</h2><a href="'. get_permalink(287) . '" class="link more">VIEW THE BLOG</a></header>';
+					            	$featured_title = get_the_title();
+					            	$featured_text = get_the_excerpt();
+					            	$featured_link = get_the_permalink();
+					            	$featured_img = get_field('blog_teaser_image');
+					            } ?>
+					
+					
+					
+					        <?php wp_reset_postdata();
+					        }
+					    }  
+					   
+				} ?>
+
+		    	<div class="container-inner">
+		    		<?php echo $featured_header; ?>
+
+					<img src="<?php echo $featured_img['sizes']['featured-image']; ?>" alt="<?php echo $featured_img['alt']; ?>" />
+
+					<article>
+					    <h5><a href="<?php echo $featured_link; ?>"><?php echo $featured_title; ?></a></h5>
+					    <p><?php echo $featured_text; ?></p>
+					    <a href="<?php echo $featured_link; ?>" class="link more">read more</a>
+					</article>
+
+				</div>
+			</div>
+		</section>
+
+
+
+
+
     <?php elseif(get_row_layout() == "video_full_module"): ?>
 
 
