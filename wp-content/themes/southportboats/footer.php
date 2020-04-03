@@ -1,29 +1,33 @@
-    <section id="bottom-contact">
-        <div class="container">
-            <div class="container-inner clearfix">
-                <div class="col-one pull-left">
-                    <h3>KEEP IN TOUCH</h3>
-                    <div class="inner-wrap clearfix">
-                        <div class="contact-form pull-left">
+	<?php if(get_field('hide_contact_strip')) {} else { ?>
 
-                            <?php gravity_form(1, false, false, false, '', false); ?>
+	    <section id="bottom-contact">
+	        <div class="container">
+	            <div class="container-inner clearfix">
+	                <div class="col-one pull-left">
+	                    <h3>KEEP IN TOUCH</h3>
+	                    <div class="inner-wrap clearfix">
+	                        <div class="contact-form pull-left">
 
-                        </div><!--contact-form-->
-                        <div class="pull-right form-contect">
-                            <p><?php the_field('contact_us_teaser', 'options'); ?> <br/><?php the_field('phone_number', 'options'); ?></p>
-                            <a href="mailto:<?php the_field('email_address', 'options'); ?>"><?php the_field('email_address', 'options'); ?></a>
-                        </div>
-                    </div>
-                </div><!--col-one-->
+	                            <?php gravity_form(1, false, false, false, '', false); ?>
 
-                <div class="col-two pull-left">
-                    <h3><?php the_field('schedule_a_demo_title', 'options'); ?></h3>
-                    <p><?php the_field('schedule_a_demo_text', 'options'); ?></p>
-                    <a href="<?php the_field('schedule_a_demo_button_link', 'options'); ?>?check=demo" class="btn black-btn"><?php the_field('schedule_a_demo_button_label', 'options'); ?></a>
-                </div>
-            </div>
-        </div>
-    </section><!--bottom-contact/-->
+	                        </div><!--contact-form-->
+	                        <div class="pull-right form-contect">
+	                            <p><?php the_field('contact_us_teaser', 'options'); ?> <br/><?php the_field('phone_number', 'options'); ?></p>
+	                            <a href="mailto:<?php the_field('email_address', 'options'); ?>"><?php the_field('email_address', 'options'); ?></a>
+	                        </div>
+	                    </div>
+	                </div><!--col-one-->
+
+	                <div class="col-two pull-left">
+	                    <h3><?php the_field('schedule_a_demo_title', 'options'); ?></h3>
+	                    <p><?php the_field('schedule_a_demo_text', 'options'); ?></p>
+	                    <a href="<?php the_field('schedule_a_demo_button_link', 'options'); ?>?check=demo" class="btn black-btn"><?php the_field('schedule_a_demo_button_label', 'options'); ?></a>
+	                </div>
+	            </div>
+	        </div>
+	    </section><!--bottom-contact/-->
+
+	<?php } ?>
 
     <footer id="footer">
         <div class="f-rwo-one">

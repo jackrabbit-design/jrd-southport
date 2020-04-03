@@ -929,6 +929,26 @@ blockquote p { color: #000; font-size: 20px; font-weight: 300; line-height: 28px
     .contact form .select-menu div select:-moz-focusring { color: transparent; text-shadow: 0 0 0 #707070; }
 
 
+
+    form .select-menu div { position: relative; width: 100%; height: 40px; line-height: 39px; border: 1px solid #C8C8C8; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; box-shadow: 0 1px 0 #E3E3E3; background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ffffff 0%, #fafafa 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#fafafa)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#fafafa 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#fafafa 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#fafafa 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#fafafa 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=0 ); /* IE6-9 */      vertical-align: middle; display: inline-block; overflow: hidden; }
+    form .select-menu div:before { content: ''; position: absolute; right: 10px; top: 9px; border: 4px solid transparent; border-bottom: 5px solid #000; z-index: 1; }
+    form .select-menu div:after { content: ''; position: absolute; right: 10px; bottom: 9px; border: 4px solid transparent; border-top: 5px solid #000; z-index: 1; }
+    form .select-menu div:hover { border-color: #AAAAAA;  }
+    form .select-menu div select { padding: 4px 10px 5px 10px; color: #5f5f5f; font-size: 15px; font-weight: 400; background: transparent url(../images/bg_select.png) no-repeat 100% 50%;    width: 120%; line-height: 1; border: 0; border-radius: 0; -webkit-appearance: none; -moz-appearance: none; -ms-appearance: none; appearance: none; text-indent: 0.01px; text-overflow: ''; position: relaive; z-index: 1;  }
+    form .select-menu div select::-ms-expand { display: none; }
+    form .select-menu div select:-moz-focusring { color: transparent; text-shadow: 0 0 0 #707070; }
+
+
+
+
+
     #map { width: 100%; z-index: 0; position: relative; }
     #map-container{ width: 100%; height: 600px; z-index: 0; position: relative; }
     #map-box { background: rgba(255,255,255,.8); position: absolute; z-index: 1; top: 30px; left: 30px; width: 350px; height: 500px; font: 400 15px/1 'ProximaNova'; overflow-x: hidden; }
