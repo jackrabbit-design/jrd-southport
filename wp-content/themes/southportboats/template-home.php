@@ -108,7 +108,7 @@
     <?php if(get_field('display_special_message_takeover', 'options')) { ?>
 
 
-            <?php if(!isset($_COOKIE['alert'])){  ?>
+            <?php /*if(!isset($_COOKIE['alert'])){ */ ?>
                 <a href="#takeover" class="takeover"></a>
                 <div id="takeover-container">
                     <div id="takeover" class="mfp-hide">
@@ -129,13 +129,13 @@
                            type: 'inline',
                            callbacks: {
                             close: function() {
-                                $.cookie('alert', 'dismiss', { expires: 1, path: '/' });
+                                /*$.cookie('alert', 'dismiss', { expires: 1, path: '/' });*/
                             }}
                         });
                     });
                 </script>
 
-            <?php }; ?>
+            <?php /*};*/ ?>
 
 
 
