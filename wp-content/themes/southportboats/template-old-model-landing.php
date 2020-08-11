@@ -1,6 +1,6 @@
 <?php
     /*
-    Template Name: Model Landing
+    Template Name: Old Model Landing
     */
     get_header(); the_post();
 ?>   
@@ -12,7 +12,7 @@
 
             <?php query_posts('post_type=model&posts_per_page=-1&orderby=title&order=ASC');
                 while ( have_posts() ) : the_post(); 
-                	if(get_field('model_is_old')) { } else {
+                	if(get_field('model_is_old')) {
                 $modelImage = get_field('teaser_image'); ?>
 
                 <li>
@@ -30,7 +30,8 @@
                     </div>
                 </li>
 
-            <?php } endwhile; wp_reset_query();?> 
+            <?php } else {}
+        endwhile; wp_reset_query();?> 
 
         </ul>
     </section><!--model-landing-wrap-->
