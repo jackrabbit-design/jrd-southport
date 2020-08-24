@@ -129,26 +129,48 @@
                     
                     <ul id="fleet">
                     
-                        <?php query_posts('post_type=model&posts_per_page=3&orderby=title&order=ASC');
-                            while ( have_posts() ) : the_post(); ?>
 
-                            <li>
-                                <a href="<?php the_permalink(); ?>">
-                                    <?php $teaserImage = get_field('teaser_image'); ?>
-                                    <img src="<?php echo $teaserImage['sizes']['models-image']; ?>" alt="<?php the_title(); ?>" />
-                                    <h3><?php the_title(); ?></h3>
-                                    
-                                    <div class="hover-box">
-                                        <div class="inner-wrap">
-                                            <div class="box-cell">
-                                                <span class="btn white-outline">VIEW MODEL</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+					<?php 
+					    $args = array(
+					        'post_type' => 'model',
+					        'posts_per_page' => 3,
+					        'orderby' => 'title',
+					        'order' => 'ASC',
+					        'meta_query' => array(
+					            array(
+					                'key' => 'model_is_old',
+					                'value' => true,
+				                    'compare' => '!='
+					            )
+					        )
+					    ); 
+					    $query = new WP_Query($args);
+					    if ( $query->have_posts() ) {
+					        while ( $query->have_posts() ) { 
+					            $query->the_post(); ?>
 
-                        <?php endwhile; wp_reset_query();?> 
+					            <li>
+					                <a href="<?php the_permalink(); ?>">
+					                    <?php $teaserImage = get_field('teaser_image'); ?>
+					                    <img src="<?php echo $teaserImage['sizes']['models-image']; ?>" alt="<?php the_title(); ?>" />
+					                    <h3><?php the_title(); ?></h3>
+					                    
+					                    <div class="hover-box">
+					                        <div class="inner-wrap">
+					                            <div class="box-cell">
+					                                <span class="btn white-outline">VIEW MODEL</span>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </a>
+					            </li>
+
+
+					        <?php wp_reset_postdata();
+					        }
+					    }  
+					?>
+   
    
                   </ul>
                 </div>
