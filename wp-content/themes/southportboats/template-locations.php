@@ -63,7 +63,7 @@
     <script>
         jQuery(function($){
             L.mapbox.accessToken = 'pk.eyJ1Ijoic291dGhwb3J0Ym9hdHMiLCJhIjoiY2lmaTZ1bjA3MnR3YWl1bHhnNTB2eGM2YSJ9.6XYY0SXwnGz6yZGYE2tOYg';
-            var map = L.mapbox.map('map-container', 'mapbox.light',{
+            var map = L.mapbox.map('map-container', null,{
                 minZoom: 3,
                 maxZoom: 12,
                 zoomControl: false
@@ -78,7 +78,7 @@
             map.scrollWheelZoom.disable();
 
 
-
+            L.mapbox.styleLayer('mapbox://styles/southportboats/ckgmc9hmo12ni1athywrf9l6z').addTo(map);
             var myLayer = L.mapbox.featureLayer().addTo(map);
 
             var geo = [{

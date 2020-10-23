@@ -61,8 +61,9 @@
     <link type="image/x-icon" rel="shortcut icon" href="<?php bloginfo('url'); ?>/favicon.ico" />
     <script src="<?php bloginfo('url'); ?>/ui/js/modernizr.js"></script>
     <script src="<?php bloginfo('url'); ?>/ui/js/jquery.js" type="text/javascript"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+
+    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
 
     <!-- Facebook Pixel Code -->
     <script>
